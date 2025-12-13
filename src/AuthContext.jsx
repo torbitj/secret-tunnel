@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
     setLocation("TUNNEL")
   }
 
-  const value = { location, signUp };
+  const value = { location, signUp, authenticate };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
