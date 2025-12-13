@@ -14,10 +14,22 @@ export function AuthProvider({ children }) {
     const localToken = localStorage.getItem('token')
     const localName = localStorage.getItem('name')
     localToken ? setStoredToken(localToken) : setStoredToken('')
+    if (localToken) {
+      setStoredToken(localToken);
+      setLocation("RETURN")
+    }
     localName ? setName(localName) : setName('');
   }, [])
 
+  const forgetName = () => {
+    localStorage.clear();
+    setLocation("GATE")
+  }
   
+  const continueToTablet = () => {
+    setToken(storedToken);
+    setLocation("TABLET");
+  }
   // TODO: signup
   const signUp = async (name) => {
     try {
@@ -61,7 +73,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const value = { location, storedToken, name, signUp, authenticate, setLocation };
+  const value = { location, storedToken, name, signUp, authenticate, continueToTablet, forgetName };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
