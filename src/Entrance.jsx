@@ -6,7 +6,6 @@ export default function Entrance() {
   const { signUp } = useAuth();
 
   const signUpUser = (formData) => { signUp(formData.get('name')) }
-  
   return (
     <>
       <h1>Cave Entrance</h1>

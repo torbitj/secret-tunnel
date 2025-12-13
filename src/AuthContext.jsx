@@ -1,13 +1,23 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const API = "https://fsa-jwt-practice.herokuapp.com";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState();
+  const [storedToken, setStoredToken] = useState('')
+  const [name, setName] = useState('')
+  const [token, setToken] = useState('');
   const [location, setLocation] = useState("GATE");
 
+  useEffect(() => {
+    const localToken = localStorage.getItem('token')
+    const localName = localStorage.getItem('name')
+    localToken ? setStoredToken(localToken) : setStoredToken('')
+    localName ? setName(localName) : setName('');
+  }, [])
+
+  
   // TODO: signup
   const signUp = async (name) => {
     try {
@@ -22,9 +32,11 @@ export function AuthProvider({ children }) {
         throw new Error("Unable to sign up user");
       }
       const signUpObj = await response.json();
-      const retrievedToken = signUpObj.token
+      const retrievedToken = signUpObj.token;
+      localStorage.setItem('token', retrievedToken);
+      localStorage.setItem('name', name);
       setToken(retrievedToken);
-      setLocation("TABLET")
+      setLocation("TABLET");
     } catch (error) {
       console.log(error)
     }
@@ -32,19 +44,24 @@ export function AuthProvider({ children }) {
   // TODO: authenticate
 
   const authenticate = async () => {
-    if (!token) { throw new Error("No token to authenticate") }
-    const response = await fetch(`${API}/authenticate`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    })
-    if (!response) { throw new Error("Unable to authenticate") }
-    setLocation("TUNNEL")
+    try {
+      console.log(token)
+      if (!token) { throw new Error("No token to authenticate") }
+      const response = await fetch(`${API}/authenticate`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      if (!response) { throw new Error("Unable to authenticate") }
+      setLocation("TUNNEL") 
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const value = { location, signUp, authenticate };
+  const value = { location, storedToken, name, signUp, authenticate, setLocation };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
