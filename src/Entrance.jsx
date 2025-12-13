@@ -22,7 +22,7 @@ export default function Entrance() {
       <form action={signUpUser}>
         <label>
           Name
-          <input name="name" />
+          <input name="name" required/>
         </label>
         <button>Respond</button>
       </form>

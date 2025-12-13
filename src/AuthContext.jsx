@@ -57,7 +57,6 @@ export function AuthProvider({ children }) {
 
   const authenticate = async () => {
     try {
-      console.log(token)
       if (!token) { throw new Error("No token to authenticate") }
       const response = await fetch(`${API}/authenticate`, {
         method: "GET",
