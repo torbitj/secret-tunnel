@@ -10,16 +10,24 @@ export function AuthProvider({ children }) {
 
   // TODO: signup
   const signUp = async (name) => {
-    const response = await fetch(`${API}/signup`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({name: name})
-    })
-    const signUpObj = await response.json();
-    const retrievedToken = signUpObj.token
-    setToken(retrievedToken);
+    try {
+      const response = await fetch(`${API}/signup`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name: name})
+      })
+      if (!response.ok) {
+        throw new Error("Unable to sign up user");
+      }
+      const signUpObj = await response.json();
+      const retrievedToken = signUpObj.token
+      setToken(retrievedToken);
+      setLocation("TABLET")
+    } catch (error) {
+      console.log(error)
+    }
   }
   // TODO: authenticate
 
