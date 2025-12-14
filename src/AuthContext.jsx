@@ -8,6 +8,7 @@ export function AuthProvider({ children }) {
   const [storedToken, setStoredToken] = useState('')
   const [name, setName] = useState('')
   const [token, setToken] = useState('');
+  const [error, setError] = useState('')
   const [location, setLocation] = useState("GATE");
 
   useEffect(() => {

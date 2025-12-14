@@ -1,5 +1,5 @@
 import { useAuth } from "./AuthContext";
-
+import Error from "./Error"
 import Entrance from "./Entrance";
 import ReturnEntrance from "./ReturnEntrance";
 import Tablet from "./Tablet";
@@ -10,5 +10,6 @@ export default function App() {
   if (location === "RETURN") return <ReturnEntrance />
   if (location === "GATE") return <Entrance />;
   if (location === "TABLET") return <Tablet />;
+  if (location === "ERROR") return <Error />;
   return <Tunnel />;
 }
