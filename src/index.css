@@ -3,13 +3,14 @@
   margin: 0 auto;
 }
 
-form,
-label {
-  display: grid;
-  gap: 0.25rem;
+h1 {
+  text-align: center;
 }
 
-#buttons {
+form,
+label,
+#buttons,
+#error {
   display: grid;
-  row-gap: 1em;
+  gap: 0.25rem;
 }
