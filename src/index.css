@@ -3,8 +3,14 @@
   margin: 0 auto;
 }
 
+h1 {
+  text-align: center;
+}
+
 form,
-label {
+label,
+#buttons,
+#error {
   display: grid;
   gap: 0.25rem;
 }

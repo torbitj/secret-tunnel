@@ -6,7 +6,6 @@ export default function Entrance() {
   const { signUp } = useAuth();
 
   const signUpUser = (formData) => { signUp(formData.get('name')) }
-  
   return (
     <>
       <h1>Cave Entrance</h1>
@@ -23,7 +22,7 @@ export default function Entrance() {
       <form action={signUpUser}>
         <label>
           Name
-          <input name="name" />
+          <input name="name" required/>
         </label>
         <button>Respond</button>
       </form>
