@@ -31,6 +31,12 @@ export function AuthProvider({ children }) {
     setToken(storedToken);
     setLocation("TABLET");
   }
+
+  const errPage = (error) => {
+    console.log(error);
+    setError(error);
+    setLocation("ERROR");
+  }
   // TODO: signup
   const signUp = async (name) => {
     try {
@@ -51,7 +57,8 @@ export function AuthProvider({ children }) {
       setToken(retrievedToken);
       setLocation("TABLET");
     } catch (error) {
-      console.log(error)
+      error.message.includes('fetch') ? errPage("No internet connection") :
+      errPage(error)
     }
   }
   // TODO: authenticate
@@ -69,11 +76,13 @@ export function AuthProvider({ children }) {
       if (!response) { throw new Error("Unable to authenticate") }
       setLocation("TUNNEL") 
     } catch (error) {
-      console.log(error)
+      error.message.includes("fetch")
+        ? errPage("No internet connection")
+        : errPage(error);
     }
   }
 
-  const value = { location, storedToken, name, signUp, authenticate, continueToTablet, forgetName };
+  const value = { location, storedToken, name, error, signUp, authenticate, continueToTablet, forgetName };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
